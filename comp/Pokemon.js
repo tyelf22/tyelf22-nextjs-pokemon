@@ -21,6 +21,8 @@ const Pokemon = (props) => {
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = React.useState([]);
 
+    const [random, setRandom] = useState('')
+
     const initialUrl = `https://pokeapi.co/api/v2/pokemon?limit=151`
 
     useEffect(() => {
@@ -55,8 +57,16 @@ const Pokemon = (props) => {
         setSearchResults(results);
     }, [searchTerm]);
 
-    console.log(pokemonData)
-    console.log(searchResults)
+    const getRandom = () => {
+        const num = Math.floor((Math.random() * 151) + 1)
+        const rand = pokemonData[num]
+        setRandom(rand)
+    }
+
+    console.log(random)
+
+    // console.log(pokemonData)
+    // console.log(searchResults)
     
     return (
         <div>
@@ -65,7 +75,8 @@ const Pokemon = (props) => {
                 <p>Application to view and search Pokemon</p>
             </div>
             <div className="coa">
-                <button>RANDOM</button>
+                <button onClick={getRandom}>RANDOM</button>
+                <button id="resetBtn" onClick={() => setRandom('')}>RESET</button>
                 <input type="text" placeholder="Search" value={searchTerm} onChange={handleChange}/>
             </div>
             {loading ? 
@@ -77,6 +88,10 @@ const Pokemon = (props) => {
                     {searchResults.map((pokemon, i) => {
                         return <Card key={i} pokemon={pokemon}/>
                     })}
+                </div> :
+                typeof random === 'object'  ?
+                <div className="grid-container">
+                    {<Card pokemon={random}/>}
                 </div> :
                 <>
                     <div className="grid-container">
@@ -110,7 +125,11 @@ const Pokemon = (props) => {
             width: 200px;
             border-radius: 10px;
             border: none;
-            margin: 0 10px;
+            margin: 10px;
+        }
+
+        #resetBtn {
+            width: 100px;
         }
 
         input {
