@@ -77,7 +77,7 @@ const Pokemon = (props) => {
             <div className="coa">
                 <button onClick={getRandom}>RANDOM</button>
                 <button id="resetBtn" onClick={() => setRandom('')}>RESET</button>
-                <input type="text" placeholder="Search" value={searchTerm} onChange={handleChange}/>
+                <input type="text" placeholder="Search" value={searchTerm} onInput={handleChange}/>
             </div>
             {loading ? 
                 <div>
