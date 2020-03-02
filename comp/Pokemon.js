@@ -64,9 +64,6 @@ const Pokemon = (props) => {
     }
 
     console.log(random)
-
-    // console.log(pokemonData)
-    // console.log(searchResults)
     
     return (
         <div>
@@ -79,27 +76,25 @@ const Pokemon = (props) => {
                 <button id="resetBtn" onClick={() => setRandom('')}>RESET</button>
                 <input type="text" placeholder="Search" value={searchTerm} onInput={handleChange}/>
             </div>
-            {loading ? 
+            { loading ? 
                 <div>
                     <h1>Loading...</h1>
                 </div> : 
+                 typeof random === 'object'  ?
+                <div className="grid-container">
+                    {<Card pokemon={random}/>}
+                </div> :
                 searchResults.length > 0 ?
                 <div className="grid-container">
                     {searchResults.map((pokemon, i) => {
                         return <Card key={i} pokemon={pokemon}/>
                     })}
                 </div> :
-                typeof random === 'object'  ?
                 <div className="grid-container">
-                    {<Card pokemon={random}/>}
-                </div> :
-                <>
-                    <div className="grid-container">
-                        {pokemonData.map((pokemon, i) => {
-                            return <Card key={i} pokemon={pokemon}/>
-                        })}
-                    </div>
-                </>
+                    {pokemonData.map((pokemon, i) => {
+                        return <Card key={i} pokemon={pokemon}/>
+                    })}
+                </div>
             }
 
         <style jsx>{`
